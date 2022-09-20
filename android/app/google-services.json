@@ -1,0 +1,158 @@
+{
+  "project_info": {
+    "project_number": "512660283322",
+    "project_id": "gemspot-d55a1",
+    "storage_bucket": "gemspot-d55a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512660283322:android:1c0e8621fde876c6e60783",
+        "android_client_info": {
+          "package_name": "live.gem.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512660283322-h9m75n2lps2npar1au569phfho9dnf8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8Hxr01b_6HqwkTXlArVlmE_K0CtabbeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512660283322-h9m75n2lps2npar1au569phfho9dnf8c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "512660283322-07h5141jptf9p4j18nvbm0l4d9ql3dfm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mnc.gemx",
+                "app_store_id": "1225091322"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512660283322:android:fb857ab027d9de52e60783",
+        "android_client_info": {
+          "package_name": "live.gem.coreapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512660283322-h9m75n2lps2npar1au569phfho9dnf8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8Hxr01b_6HqwkTXlArVlmE_K0CtabbeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512660283322-h9m75n2lps2npar1au569phfho9dnf8c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "512660283322-07h5141jptf9p4j18nvbm0l4d9ql3dfm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mnc.gemx",
+                "app_store_id": "1225091322"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512660283322:android:98b5a9cd44fcf2b3e60783",
+        "android_client_info": {
+          "package_name": "live.gem.gembiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512660283322-h9m75n2lps2npar1au569phfho9dnf8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8Hxr01b_6HqwkTXlArVlmE_K0CtabbeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512660283322-h9m75n2lps2npar1au569phfho9dnf8c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "512660283322-07h5141jptf9p4j18nvbm0l4d9ql3dfm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mnc.gemx",
+                "app_store_id": "1225091322"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512660283322:android:24031a2d4aefa032e60783",
+        "android_client_info": {
+          "package_name": "live.gem.gemspot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512660283322-h9m75n2lps2npar1au569phfho9dnf8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8Hxr01b_6HqwkTXlArVlmE_K0CtabbeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512660283322-h9m75n2lps2npar1au569phfho9dnf8c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "512660283322-07h5141jptf9p4j18nvbm0l4d9ql3dfm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mnc.gemx",
+                "app_store_id": "1225091322"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

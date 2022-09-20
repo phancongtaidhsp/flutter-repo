@@ -1,0 +1,103 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- none
+
+variables:
+
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: 'gem-prod'
+
+  # Web app name
+  webAppName: $(api-app-name)
+
+  # Environment name
+  environmentName: $(api-app-name)
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+  # Firebase messaging file
+  firebaseMessaging: $(firebase-prod)
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '14.x'
+      displayName: 'Install Node.js'
+
+    - task: DownloadSecureFile@1
+      name: firebase
+      inputs:
+        secureFile: $(firebaseMessaging)
+
+    # FOR PRODUCTION ENV ONLY
+    - script: |
+        mv $(Build.SourcesDirectory)/.env.production $(Build.SourcesDirectory)/.env
+        mv $(firebase.secureFilePath) $(Build.SourcesDirectory)/public/firebase-messaging-sw.js
+      displayName: 'Change to production environment configuration'
+      
+    - script: |
+        npm install
+        npm run build:prod --if-present
+ # npm run test is taking a long time. Avoid it if there is no test.
+ #       npm run test --if-present
+      displayName: 'npm install, build and test'
+    
+    - task: CopyFiles@2
+      inputs:
+        Contents: '**'
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+        CleanTargetFolder: true
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        replaceExistingArchive: true
+
+    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      artifact: drop
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    environment: $(environmentName)
+    pool:
+      vmImage: $(vmImageName)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: ExtractFiles@1
+            inputs:
+              archiveFilePatterns: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+              destinationFolder: $(Build.DefaultWorkingDirectory)/$(Build.BuildId)
+          
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: $(azureSubscription)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: az storage blob upload-batch --account-name $(azure-storage-account-name) --account-key $(azure-storage-account-key) --destination '$web' --source ./
+              workingDirectory: $(Build.DefaultWorkingDirectory)/$(Build.BuildId)/build
+          

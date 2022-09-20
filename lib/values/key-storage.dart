@@ -1,0 +1,3 @@
+
+
+const String KEY_OPEN_APP_FIRST_TIME = "IS_OPEN_APP_FIRST_TIME";

@@ -1,0 +1,85 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+# Flutter build
+# variables:
+#   projectDirectory: flutter_sample_project
+variables:
+  projectDirectory: './'
+  configurationDart: $(config-file)
+  mydate: $(Get-Date -Format yyyyMMddhhmmss)
+
+  
+trigger: none
+#  - main
+
+jobs:
+  - job: Android
+
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - task: DownloadSecureFile@1
+        name: keyprop
+        displayName: Download key properties file
+        inputs:
+          secureFile: 'consumer-app-key.properties'
+
+      - task: DownloadSecureFile@1
+        name: key
+        displayName: Download signing key
+        inputs:
+          secureFile: 'consumer-key.jks'
+
+      - task: Bash@3
+        displayName: Copy config files
+        inputs:
+          targetType: 'inline'
+          script: |
+            cp $(keyprop.secureFilePath) $(Build.SourcesDirectory)/android/key.properties
+            cp $(key.secureFilePath) $(Build.SourcesDirectory)/android/gem.jks
+            
+            echo "key.properties copied to $(Build.SourcesDirectory)/android/key.properties"
+            echo "key.jks copied to $(Build.SourcesDirectory)/android/gem.jks"
+      - task: DownloadSecureFile@1
+        name: configFile
+        inputs:
+          secureFile: $(configurationDart)
+      - script: |
+          mv $(configFile.secureFilePath) lib/configuration.dart
+        displayName: 'Rename config file to configuration.dart'
+
+      - task: FlutterInstall@0
+        inputs:
+          mode: 'auto'
+          channel: 'stable'
+          version: 'custom'
+          customVersion: '2.10.5'
+      - task: FlutterBuild@0
+        inputs:
+          target: apk
+          buildName: 4.0.1
+          buildNumber: 175
+          projectDirectory: $(projectDirectory)
+          extraArgs: --no-sound-null-safety --no-tree-shake-icons
+    
+      - task: FlutterBuild@0
+        inputs:
+            target: aab
+            buildName: 4.0.1
+            buildNumber: 175
+            projectDirectory: $(projectDirectory)
+            extraArgs: --no-sound-null-safety --no-tree-shake-icons
+
+      - task: CopyFiles@2
+        inputs:
+          contents: '**/*.aab'
+          targetFolder: '$(build.artifactStagingDirectory)'
+
+      - task: CopyFiles@2
+        inputs:
+          contents: '**/*.apk'
+          targetFolder: '$(build.artifactStagingDirectory)'
+      - task: PublishBuildArtifacts@1
